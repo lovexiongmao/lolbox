@@ -1,0 +1,85 @@
+html {
+	font-size: 100px;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-size: .16rem;
+	background-color: lavender;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+a {
+	text-decoration: none;
+	color: #BBBBBB;
+}
+
+footer {
+	z-index: 100;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	height: .8rem;
+	border-top: 1px solid gainsboro;
+}
+
+footer .active {
+	color: sandybrown;
+}
+
+.lx-navbar {
+	height: 100%;
+	background-color: white;
+}
+
+.lx-navbar li {
+	float: left;
+	width: 25%;
+	height: 100%;
+}
+
+.ui-icon {
+	position: relative;
+	display: block;
+	box-sizing: border-box;
+	height: 100%;
+	padding-top: .5rem;
+	text-align: center;
+	line-height: .3rem;
+	font-size: .13rem;
+	color: #2A2A2A;
+}
+
+.ui-icon-zixun:before {
+	background: url('../img/lol16.png') no-repeat;
+}
+
+.ui-icon-wuping:before {
+	background: url('../img/lol11.png') no-repeat;
+}
+
+.ui-icon-yingxiong:before {
+	background: url('../img/lol21.png') no-repeat;
+}
+
+.ui-icon-wode:before {
+	background: url('../img/lol5.png') no-repeat;
+}
+
+.ui-icon:before {
+	content: "";
+	position: absolute;
+	left: 50%;
+	top: .05rem;
+	display: block;
+	width: .5rem;
+	height: .5rem;
+	margin-left: -.25rem;
+	background-size: .5rem .5rem;
+}

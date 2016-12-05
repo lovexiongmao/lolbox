@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>LOL</title>
+		<link rel="stylesheet" href="css/swiper.css" />
+		<link rel="stylesheet" href="css/iconfont/iconfont.css" />
+		<link rel="stylesheet" href="css/common.css" />
+		<script type="text/javascript" src="js/lib/jquery.js"></script>
+		<style>
+			header {
+				height: 2rem;
+			}
+			
+			.lunbo {
+				height: 2rem;
+			}
+			
+			.lunbo a {
+				display: block;
+				height: 100%;
+			}
+			
+			#main {
+				background-color: lavender;
+			}
+			
+			.lx-listview {
+				padding: .1rem;
+				border-bottom: 81px solid transparent;
+			}
+			
+			.lx-listview li {
+				height: .8rem;
+				margin-top: .05rem;
+				background: white;
+			}
+			
+			.lx-listview li:first-child {
+				margin-top: 0;
+			}
+			
+			.lx-listview li a {
+				position: relative;
+				display: block;
+				box-sizing: border-box;
+				height: 100%;
+			}
+			
+			.lx-listview .news .small-image {
+				position: absolute;
+				top: .1rem;
+				left: .1rem;
+				width: .9rem;
+				height: .6rem;
+			}
+			
+			.lx-listview li h3 {
+				position: absolute;
+				left: 1.1rem;
+				top: .08rem;
+				margin: 0;
+				color: black;
+				font-size: .14rem;
+				font-weight: 500;
+			}
+			
+			.lx-listview li .desc {
+				position: absolute;
+				left: 1.1rem;
+				top: .28rem;
+				font-size: .11rem;
+				font-weight: 200;
+				color: gray;
+			}
+			
+			.lx-listview li .info {
+				position: absolute;
+				left: 1.1rem;
+				bottom: .07rem;
+				font-size: .11rem;
+				color: #AAAAAA;
+				font-weight: 100;
+			}
+			
+			.lx-listview li .info .pv {
+				color: sandybrown;
+			}
+			
+			.lx-listview .li-image {
+				height: 2rem;
+			}
+			
+			.lx-listview .li-image h3,
+			.lx-listview .li-image .desc,
+			.lx-listview .li-image .big-image,
+			.lx-listview .li-image .info {
+				left: .1rem;
+			}
+			
+			.lx-listview .li-image .big-image {
+				position: absolute;
+				top: .5rem;
+				right: .74rem;
+				height: 1.2rem;
+			}
+			
+			.lx-listview .li-image .small-image {
+				position: absolute;
+				top: .5rem;
+				right: .07rem;
+				width: .6rem;
+				height: .575rem;
+				overflow: hidden;
+			}
+			
+			.lx-listview .li-image .count-image,
+			.lx-listview .li-image .count-text {
+				position: absolute;
+				right: .07rem;
+				top: 1.15rem;
+				width: .6rem;
+				height: .575rem;
+				overflow: hidden;
+			}
+			
+			.lx-listview .li-image .count-text {
+				z-index: 2;
+				text-align: center;
+				line-height: .575rem;
+				font-size: .11rem;
+				color: white;
+				background-color: rgba(0, 0, 0, 0.6);
+			}
+			
+			.lx-listview .li-image .small-image img,
+			.lx-listview .li-image .count-image img {
+				position: relative;
+				left: -.25rem;
+				max-height: .575rem;
+			}
+			
+			.lx-listview .icon-video {
+				display: block;
+				position: absolute;
+				top: .25rem;
+				left: .4rem;
+				width: .3rem;
+				height: .3rem;
+				border-radius: 50%;
+				background-color: rgba(0, 0, 0, 0.3);
+				font-size: .3rem;
+				color: #F4A460;
+				font-weight: 500;
+			}
+			
+			.small-btn {
+				position: absolute;
+				right: .1rem;
+				bottom: .05rem;
+				padding: .01rem .03rem;
+				border-radius: .02rem;
+				font-size: .1rem;
+			}
+			
+			.small-btn.img-btn {
+				color: sandybrown;
+				border: 1px solid sandybrown;
+			}
+			
+			.small-btn.video-btn {
+				color: #22AADD;
+				border: 1px solid #22AADD;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div>
+			<header>
+				<!-- Swiper -->
+				<div class="swiper-container lunbo">
+					<!-- Add Pagination -->
+					<div class="swiper-pagination"></div>
+				</div>
+				<!-- Swiper JS -->
+				<script type="text/javascript" src="js/lib/swiper.jquery.js"></script>
+				<script type="text/javascript" src="js/lib/artTemplate.js"></script>
+				<script id="lunbo" type="text/html">
+					<div class="swiper-slide">
+						<a href="{{article_url}}" style="background: url('{{image_url_big}}') no-repeat; background-size:100% 100%;"></a>
+					</div>
+				</script>
+				<!-- Initialize Swiper -->
+				<script>
+					$.ajax({
+						type: "get",
+						url: "json/lunbo.json",
+						dataType: "json",
+						success: function(datas) {
+							var $wrapper = $('<div class="swiper-wrapper" />');
+							$.each(datas.list, function(i, data) {
+								$(template('lunbo', data)).appendTo($wrapper);
+							});
+							$wrapper.prependTo('.swiper-container.lunbo');
+							var swiper = new Swiper('.swiper-container', {
+								pagination: '.swiper-pagination',
+								paginationClickable: true,
+								autoplay: 2500
+							});
+						}
+					});
+				</script>
+			</header>
+			<div id="main">
+				<ul class="lx-listview">
+				</ul>
+			</div>
+			<!--新闻模板-->
+			<script id="newsTemp" type="text/html">
+				<li class="news">
+					<a href="{{article_url}}">
+						<img class="small-image" src="{{image_url_big}}" alt="" />
+						<h3>{{title}}</h3>
+						<div class="desc">{{summary}}</div>
+						<div class="info">
+							<span class="publication-time"></span>
+							<span class="pv">{{pv}}阅</span>
+						</div>
+					</a>
+				</li>
+			</script>
+			<!--图集模板-->
+			<script id="imageTemp" type="text/html">
+				<li class="li-image">
+					<a href="{{article_url}}">
+						<h3>{{title}}</h3>
+						<div class="desc">{{summary}}</div>
+						<div class="big-image" style="background: url('{{big_image_url}}') no-repeat; background-size: cover;"></div>
+						<div class="small-image"><img src='{{small_image_url}}' /></div>
+						<div class="count-image"><img src='{{count_image_url}}' /></div>
+						<div class="count-text"></div>
+						<div class="info">
+							<span class="publication-time"></span>
+							<span class="pv">{{pv}}阅</span>
+						</div>
+						<span class="small-btn img-btn">图集</span>
+					</a>
+				</li>
+			</script>
+			<script>
+				// 请求资讯数据
+				$.ajax({
+					type: "get",
+					url: "json/news.json",
+					async: true,
+					dataType: "json",
+					success: function(datas) {
+						var $ul = $(".lx-listview");
+						// 当前时间的毫秒数
+						var now = new Date().getTime(); 
+						// 如果datas是字符串  将它解析成object
+						if (datas.constructor == String)
+							datas = JSON.parse(datas);
+
+						// 遍历数据,渲染模板
+						$.each(datas.list, function(i, data) {
+							var $li;
+							// 根据数据的不同渲染不同模板
+							if (data.newstypeid == "image") {
+								$li = $(template('imageTemp', data));
+								$li.find('.count-text').text(data.count + ' 张');
+							} else {
+								$li = $(template('newsTemp', data));
+								if (data.newstype == "视频") {
+									$li.children("a").append($('<span class="small-btn video-btn">视频</span>'), $('<span class="icon-video iconfont icon-shipin"></span>'));
+								}
+							}
+							// 计算资讯是多少小时前发布的
+							var publicationTime = new Date(data.publication_date).getTime();
+							var hours = parseInt((now - publicationTime) / (1000 * 3600));
+							// 模板插入页面
+							$li.find(".publication-time").text(hours + "小时前").end().appendTo($ul);
+						});
+					}
+				});
+			</script>
+			<footer>
+				<ul class="lx-navbar">
+					<li><a href="" class="ui-icon ui-icon-zixun active">资讯</a></li>
+					<li><a href="good.html" class="ui-icon ui-icon-wuping">物品</a></li>
+					<li><a href="heros.html" class="ui-icon ui-icon-yingxiong">英雄</a></li>
+					<li><a class="ui-icon ui-icon-wode">我的</a></li>
+				</ul>
+			</footer>
+		</div>
+
+	</body>
+
+</html>

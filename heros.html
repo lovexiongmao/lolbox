@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="css/common.css" />
+		<link rel="stylesheet" href="css/iconfont/iconfont.css" />
+		<link rel="stylesheet" href="css/title.css" />
+		<style>
+			.header-tabs {
+				height: .4rem;
+				background-color: rgb(234, 234, 234);
+			}
+			
+			.header-tabs li {
+				float: left;
+				width: 33%;
+				height: 100%;
+			}
+			
+			.header-tabs li a {
+				display: block;
+				color: gray;
+				line-height: .4rem;
+				text-align: center;
+				font-size: .14rem;
+				/*font-weight: 300;*/
+			}
+			
+			.header-tabs-active {
+				color: rgb(208, 172, 102) !important;
+			}
+			
+			.update-time {
+				height: .28rem;
+				margin: .1rem;
+				border-radius: .03rem;
+				background-color: rgb(206, 206, 206);
+				line-height: .28rem;
+				text-align: center;
+				color: white;
+				font-size: .11rem;
+				letter-spacing: .02rem;
+			}
+			
+			.title-tabs .title-tabs-header {
+				width: 25%;
+			}
+			
+			.title-tabs .title-tabs-content {
+				top: 1.65rem;
+			}
+			/*-------------英雄列表-----------*/
+			
+			.heros-listview {
+				border-top: 1.68rem solid transparent;
+			}
+			
+			.heros-listview li {
+				float: left;
+				width: 50%;
+				height: .8rem;
+				/*margin: .1rem 0;*/
+			}
+			
+			.heros-listview li a {
+				position: relative;
+				display: block;
+				height: 100%;
+			}
+			
+			.heros-listview li a img,
+			.heros-listview li a h3,
+			.heros-listview li a div,
+			.heros-listview li a span {
+				position: absolute;
+				left: .75rem;
+			}
+			
+			.heros-listview li a img {
+				top: .1rem;
+				left: .15rem;
+				width: .5rem;
+				height: .5rem;
+			}
+			
+			.heros-listview li a .nick {
+				margin: 0;
+				top: .1rem;
+				font-size: .13rem;
+				color: black;
+			}
+			
+			.heros-listview li a .name {
+				top: .32rem;
+				font-size: .12rem;
+				color: gray;
+			}
+			
+			.heros-listview li a .tags {
+				top: .5rem;
+				font-size: .13rem;
+				color: #0066FF;
+			}
+			
+			.heros-listview li a .own,
+			.heros-listview li a .newVersion {
+				top: .1rem;
+				left: .15rem;
+				padding: .02rem;
+				font-size: .09rem;
+				color: white;
+				font-weight: 100;
+				background-color: #0066FF;
+			}
+			
+			.heros-listview li a .newVersion {
+				background-color: #00CC99;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header>
+			<div class="title"><span class="iconfont icon-zuojiantou"></span>英雄资料</div>
+			<ul class="header-tabs">
+				<li>
+					<a class="header-tabs-active">所有英雄</a>
+				</li>
+				<li>
+					<a>周免英雄</a>
+				</li>
+				<li>
+					<a>我的英雄</a>
+				</li>
+			</ul>
+			<!--<div class="toolbar-input"><span class="iconfont icon-fangdajing"></span>搜索</div>-->
+			<div class="search-input-wrapper">
+				<span class="iconfont icon-fangdajing"></span>
+				<input class="toolbar-input" id="search" type="search" placeholder="搜索">
+				<label for="search" hidden="hidden">搜索</label>
+			</div>
+			<div class="title-tabs">
+				<ul>
+					<li class="title-tabs-header">
+						<div>英雄类型</div>
+						<span class="xiabiao iconfont icon-icon"></span>
+					</li>
+					<li class="title-tabs-header">
+						<div>位置</div>
+						<span class="xiabiao iconfont icon-icon"></span>
+					</li>
+					<li class="title-tabs-header">
+						<div>价格</div><span class="xiabiao iconfont icon-icon"></span>
+					</li>
+					<li class="title-tabs-header">
+						<div>排序</div><span class="xiabiao iconfont icon-icon"></span>
+
+					</li>
+				</ul>
+
+				<div class="title-tabs-content">
+					<div class="title-tabs-content-heroType">
+						<ul>
+							<li><a class="title-tabs-content-active">全部类型</a></li>
+							<li><a>我的收藏</a></li>
+							<li><a>新手</a></li>
+							<li>
+
+							</li>
+							<li><a>战士</a></li>
+							<li><a>法师</a></li>
+							<li><a>刺客</a></li>
+							<li><a>坦克</a></li>
+							<li><a>辅助</a></li>
+							<li><a>射手</a></li>
+
+						</ul>
+					</div>
+					<div class="title-tabs-content-weizhi">
+						<ul>
+							<li><a class="title-tabs-content-active">全部</a></li>
+							<li><a>上单</a></li>
+							<li><a>打野</a></li>
+							<li><a>中单</a></li>
+							<li><a>ADC</a></li>
+							<li><a>辅助</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="update-time" style="display: none;">更新时间:每周五中午</div>
+		</header>
+		<div id="main">
+		</div>
+		<script type="text/javascript" src="js/lib/artTemplate.js"></script>
+		<!--英雄模板-->
+		<script id="herosTemp" type="text/html">
+			<li>
+				<a href="">
+					<img src="http://ossweb-img.qq.com/images/lol/img/champion/{{en_name}}.png" alt="" />
+					<h3 class="nick">{{nick}}</h3>
+					<div class="name">{{name}}</div>
+					<div class="tags">{{tag1}}&nbsp;{{tag2}}</div>
+				</a>
+			</li>
+		</script>
+		<script type="text/javascript" src="js/lib/jquery.js"></script>
+		<script>
+			// 请求英雄数据
+			$.ajax({
+				type: "get",
+				url: "json/heros.json",
+				async: true,
+				dataType: "json",
+				success: function(datas) {
+					var $ul = $('<ul class="heros-listview" />');
+					// 将新版本英雄与未改动英雄分开处理
+					var newVersion = [],
+						oldVersion = [];
+					var $li;
+					$.each(datas, function(i, data) {
+						if (data.newhero) {
+							newVersion.push(data);
+						} else {
+							oldVersion.push(data);
+						}
+					});
+					$.each(newVersion, function(i, val) {
+						$li = $(template('herosTemp', val)).find('a').append($('<span class="newVersion">新版本</span>')).end().appendTo($ul);
+						$li.children('a').data({
+							tag1: val.tag1,
+							tag2: val.tag2,
+							tag3: val.tag3,
+							tag4: val.tag4,
+							en_name: val.en_name,
+							name: val.name,
+							nick:val.nick,
+							money: val.money,
+							newmoney: val.newmoney,
+							coin: val.coin,
+							difficulty: val.difficulty
+						});
+					});
+					$.each(oldVersion, function(i, val) {
+						$li = $(template('herosTemp', val)).appendTo($ul);
+						$li.children('a').data({
+							tag1: val.tag1,
+							tag2: val.tag2,
+							tag3: val.tag3,
+							tag4: val.tag4,
+							en_name: val.en_name,
+							name: val.name,
+							nick:val.nick,
+							money: val.money,
+							newmoney: val.newmoney,
+							coin: val.coin,
+							difficulty: val.difficulty
+						});
+					});
+					$ul.append('<li style="clear: left; height: .8rem;" />').prependTo('#main');
+				}
+			});
+		</script>
+
+		<footer>
+			<ul class="lx-navbar">
+				<li><a href="index.html" class="ui-icon ui-icon-zixun">资讯</a></li>
+				<li><a href="good.html" class="ui-icon ui-icon-wuping">物品</a></li>
+				<li><a href="heros.html" class="ui-icon ui-icon-yingxiong active">英雄</a></li>
+				<li><a class="ui-icon ui-icon-wode">我的</a></li>
+			</ul>
+		</footer>
+		<script>
+			// tabs 切换
+			$('.title-tabs-header').click(function() {
+				var $this = $(this).toggleClass('title-tabs-header-active').siblings().removeClass('title-tabs-header-active').end();
+				$('.title-tabs-content').children().eq($this.index()).toggle().siblings().css("display", "none");
+			});
+			
+			// 不同类型英雄切换
+			$('.title-tabs-content a').click(function(e) {
+				e.preventDefault();
+				// 获取所有兄弟按钮， 设置按钮样式
+				var $elems = $(e.currentTarget).parent().siblings().children('a').add($(e.currentTarget));
+				$elems.each(function(i, elem) {
+					if (elem == e.currentTarget) {
+						$(elem).addClass('title-tabs-content-active');
+					} else {
+						$(elem).removeClass('title-tabs-content-active');
+					}
+				});
+				
+				// 设置tab-header的文字以及筛选英雄
+				var clickText = $(this).text();
+				if (clickText == '全部类型') {
+					$('.title-tabs-header:eq(0)').children('div').text('英雄类型');
+					$('.heros-listview li').css("display", "block");
+				} else if (clickText == '全部') {
+					$('.title-tabs-header:eq(1)').children('div').text('位置');
+					$('.heros-listview li').css("display", "block");
+				} else {
+					$('.title-tabs-header').eq($(this).parentsUntil('div').parent().index()).children('div').text(clickText);
+					searchHeros(clickText);
+				}
+			});
+			
+			// 点击搜索图标进行搜索
+			$('.search-input-wrapper .icon-fangdajing').click(function () {
+				var val = $('input[type=search]').val();
+				searchHeros(val);
+			});
+			
+			// 当焦点在input元素时，点击回车搜索英雄
+			$('.search-input-wrapper input[type=search]').keypress(function (e) {
+				if (e.keyCode == 13) {
+					var val = $('input[type=search]').val();
+					searchHeros(val);
+				}
+			});
+			
+			// 搜索英雄 ， text是搜索关键字
+			function searchHeros (text) {			 
+				 if (text.trim() != "") {
+				 	$('.heros-listview a').each(function(i, elem) {
+						var data = $(elem).data();
+						var flag = 0;
+						for (var prop in data) {
+							if (new RegExp('^'+text+'+').test(data[prop])) {
+								flag++;
+								break;
+							}
+						}
+						if (flag) $(this).parent().css("display", "block");
+						else $(this).parent().css("display", "none");
+					});
+				 }
+			}
+		</script>
+	</body>
+
+</html>

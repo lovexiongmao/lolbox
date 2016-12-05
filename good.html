@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" href="css/common.css" />
+		<link rel="stylesheet" href="css/title.css" />
+		<link rel="stylesheet" href="css/iconfont/iconfont.css" />
+		<style>
+			
+			#main {
+				border-top: 1.24rem solid transparent;
+			}
+			
+			#good-listview li {
+				float: left;
+				width: 25%;
+				height: 1.1rem;
+			}
+			
+			#good-listview li a {
+				display: block;
+				box-sizing: border-box;
+				height: 100%;
+				padding-top: .1rem;
+			}
+			
+			#good-listview .good-item-img {
+				display: block;
+				width: .55rem;
+				height: .6rem;
+				margin: 0 auto .02rem;
+			}
+			
+			#good-listview .good-item-text {
+				height: .38rem;
+				text-align: center;
+				line-height: .38rem;
+				font-size: .13rem;
+				color: black;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header>
+			<div class="title"><span class="iconfont icon-zuojiantou"></span>物品资料</div>
+			<div class="search-input-wrapper">
+				<span class="iconfont icon-fangdajing"></span>
+				<input class="toolbar-input" id="search" type="search" placeholder="搜索">
+				<label for="search" hidden="hidden">搜索</label>
+			</div>
+			<div class="title-tabs">
+				<ul>
+					<li class="title-tabs-header">
+						<div>全部地图<span class="xiabiao iconfont icon-icon"></span></div>
+					</li>
+					<li class="title-tabs-header">
+						<div>全部物品<span class="xiabiao iconfont icon-icon"></span></div>
+					</li>
+				</ul>
+				<div class="title-tabs-content">
+					<div class="title-tabs-content-mapType">
+						<ul>
+							<li><a class="title-tabs-content-active">全部地图</a></li>
+							<li><a>召唤师峡谷</a></li>
+							<li><a>嚎哭深渊</a></li>
+							<li><a>水晶之痕</a></li>
+							<li><a>扭曲丛林</a></li>
+						</ul>
+					</div>
+					<div class="title-tabs-content-goodType">
+						<ul>
+							<li><a class="title-tabs-content-active">全部物品</a></li>
+							<li><a>攻击速度</a></li>
+							<li><a>对线</a></li>
+							<li><a>冷却缩减</a></li>
+							<li><a>工资装</a></li>
+							<li><a>护甲</a></li>
+							<li><a>鞋</a></li>
+							<li><a>魔法抗性</a></li>
+							<li><a>暴击</a></li>
+							<li><a>消耗品</a></li>
+							<li><a>其他移速</a></li>
+							<li><a>生命回复</a></li>
+							<li><a>打野</a></li>
+							<li><a>视野&饰品</a></li>
+							<li><a>生命偷取</a></li>
+							<li><a>生命值</a></li>
+							<li><a>法术强度</a></li>
+							<li><a>伤害</a></li>
+							<li><a>法力值</a></li>
+							<li><a>法力回复</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</header>
+		<div id="main">
+		</div>
+		<script type="text/javascript" src="js/lib/artTemplate.js"></script>
+		<!--物品模板-->
+		<script id="goodsTemp" type="text/html">
+			<li>
+				<a href="">
+					<img class="good-item-img" src="http://ossweb-img.qq.com/images/lol/img/item/{{good_id}}.png" />
+					<div class="good-item-text"> {{name}}</div>
+				</a>
+			</li>
+		</script>
+		<script type="text/javascript" src="js/lib/jquery.js"></script>
+		<script>
+			// 请求物品数据
+			$.ajax({
+				type: "get",
+				url: "json/goods.json",
+				async: true,
+				dataType: "json",
+				success: function(datas) {
+					var $ul = $('<ul id="good-listview" />');
+					// 遍历数据,渲染模板
+					$.each(datas.items, function(i, data) {
+						var $li = $(template('goodsTemp', data)).appendTo($ul);
+						// 将数据绑定到li下的a元素，方便之后的搜索等操作
+						$li.children('a').data({
+							'maplist': data.maplist,
+							'proplist': data.proplist,
+							'name': data.name,
+							'othernames': data.othernames,
+						});
+						// 物品名过长的处理
+						if (data.name.length > 4) {
+							$li.find('.good-item-text').html( data.name.substr(0, 4) + '<br/>' + data.name.substr(3)).css("line-height", ".19rem");
+						}
+					});
+					// 在ul的最后再加一个li是为了把展示数据的li顶上去，不被footer挡住
+					$ul.append('<li style="clear: left; height: .8rem;" />').prependTo('#main');
+				}
+			});
+		</script>
+
+		<footer>
+			<ul class="lx-navbar">
+				<li><a href="index.html" class="ui-icon ui-icon-zixun">资讯</a></li>
+				<li><a href="" class="ui-icon ui-icon-wuping active">物品</a></li>
+				<li><a href="heros.html" class="ui-icon ui-icon-yingxiong">英雄</a></li>
+				<li><a class="ui-icon ui-icon-wode">我的</a></li>
+			</ul>
+		</footer>
+		<script>
+			// tabs切换
+			$('.title-tabs-header').click(function() {
+				var $this = $(this).toggleClass('title-tabs-header-active').siblings().removeClass('title-tabs-header-active').end();
+				$('.title-tabs-content').children().eq($this.index()).toggle().siblings().css("display", "none");
+			});
+
+			// 不同类型物品的切换 
+			$('.title-tabs-content a').click(function(e) {
+				e.preventDefault();
+				var $elems = $(e.currentTarget).parent().siblings().children('a').add($(e.currentTarget));
+				$elems.each(function(i, elem) {
+					if (e.currentTarget == elem) {
+						$(this).addClass('title-tabs-content-active');
+					} else {
+						$(this).removeClass('title-tabs-content-active');
+					}
+				});
+				var clickText = $(this).text();
+				if (clickText == "全部地图" || clickText == "全部物品") {
+					$('.title-tabs-header:eq(0)').children('div').text(clickText);
+					$('#good-listview li').css('display', 'block');
+				} else {
+					var i = $(this).parentsUntil('div').parent().index();
+					var type;
+					$('.title-tabs-header').eq(i).children('div').text(clickText);
+					type = i == 0 ? "maplist" : "proplist";
+					$('#good-listview a').each(function(i, elem) {
+						var data = $(elem).data();
+						var flag = 0;
+						for (var j = 0; j < data[type].length; j++) {
+							if (data[type][j] == clickText) {
+								flag = 1;
+								break;
+							}
+						}
+						if (flag) $(this).parent().css("display", "block");
+						else $(this).parent().css("display", "none");
+					})
+				}
+			});
+
+			// 点击搜索图标搜索物品
+			$('.search-input-wrapper .icon-fangdajing').click(function() {
+				var val = $('input[type=search]').val();
+				searchHeros(val);
+			});
+			
+			// 当焦点在input元素时，点击回车搜索物品
+			$('.search-input-wrapper input[type=search]').keypress(function(e) {
+				if (e.keyCode == 13) {
+					var val = $('input[type=search]').val();
+					searchHeros(val);
+				}
+			});
+
+			// 搜索物品 ， text是搜索关键字
+			function searchHeros(text) {
+				if (text.trim() != "") {
+					$('#good-listview a').each(function(i, elem) {
+						// 获取元素绑定的数据
+						var data = $(elem).data();
+						// 是否显示的标识
+						var show = false;
+						// 遍历数据，将数据与搜索关键字text进行对比，控制元素的显示与隐藏
+						for (var prop in data) {
+							var val = data[prop];
+							// 将字符串型数据和数组型数据分开处理、对比
+							if (val.constructor == Array) {
+								$.each(val, function(i, value) {
+									if (new RegExp('^' + text + '+').test(value)) {
+										show = true;
+									}
+								});
+								// if (flag) break;
+							} else if (new RegExp('^' + text + '+').test(data[prop])) {
+								show = true;
+								break;
+							}
+						}
+						// 根据show标识控制元素的显示与隐藏
+						if (show) $(this).parent().css("display", "block");
+						else $(this).parent().css("display", "none");
+					});
+				}
+			}
+		</script>
+	</body>
+
+</html>
